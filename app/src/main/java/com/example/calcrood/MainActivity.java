@@ -16,8 +16,45 @@ public class MainActivity extends AppCompatActivity {
     Button btnClean, btnInfo, btnBack, btnDivi, btnMulti, btnSub, btnPlus, btnIgual, btnDot;
 
     private String numbersA;
-    private String numbersB;
     private String operator;
+
+
+    private Double calcResult(String numbersA, String numbersB, String operator){
+
+        if (operator.equals("+")) {
+            return Double.parseDouble(numbersA) + Double.parseDouble(numbersB);
+        } else if (operator.equals("-")) {
+            return Double.parseDouble(numbersA) - Double.parseDouble(numbersB);
+        } else if (operator.equals("᙮")) {
+            return Double.parseDouble(numbersA) * Double.parseDouble(numbersB);
+        }
+
+        return Double.parseDouble(numbersA) / Double.parseDouble(numbersB);
+    }
+
+    private String getNumbersB(String operator){
+
+        String numbersB = null;
+
+        String idxTextView = textView.getText().toString();
+        int idxMais = idxTextView.indexOf(operator);
+
+        if (idxMais != -1 && idxMais < idxTextView.length() - 1) {
+            String caracteresAposMais = idxTextView.substring(idxMais + 1);
+            numbersB = caracteresAposMais;
+        }
+
+        return numbersB;
+
+    }
+
+    private void viewNumber(String number){
+        if (textView.getText() != number) {
+            textView.append(number);
+        } else {
+            textView.setText("0");
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,117 +92,77 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText("");
                 textView2.setText("");
                 numbersA = "";
-                numbersB = "";
+                getNumbersB(operator);
             }
         });
 
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-//                    textView.setText();
-                }else {
-                    textView.append("0");
-                }
+                viewNumber("0");
             }
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("1");
-                }else {
-                    textView.append("1");
-                }
+               viewNumber("1");
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("2");
-                }else {
-                    textView.append("2");
-                }
+                viewNumber("2");
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("3");
-                }else {
-                    textView.append("3");
-                }
+                viewNumber("3");
             }
         });
 
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("4");
-                }else {
-                    textView.append("4");
-                }
+                viewNumber("4");
             }
         });
 
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("5");
-                }else {
-                    textView.append("5");
-                }
+                viewNumber("5");
             }
         });
 
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("6");
-                }else {
-                    textView.append("6");
-                }
+                viewNumber("6");
             }
         });
 
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("7");
-                }else {
-                    textView.append("7");
-                }
+                viewNumber("7");
             }
         });
 
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("8");
-                }else {
-                    textView.append("8");
-                }
+                viewNumber("8");
             }
         });
 
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textView.getText() == "0"){
-                    textView.setText("9");
-                }else {
-                    textView.append("9");
-                }
+                viewNumber("9");
             }
         });
 
@@ -221,28 +218,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 textView2.setText(textView.getText().toString());
-                String idxTextView = textView.getText().toString();
-                int idxMais = idxTextView.indexOf(operator);
 
-                if (idxMais != -1 && idxMais < idxTextView.length() - 1) {
-                    String caracteresAposMais = idxTextView.substring(idxMais + 1);
-                    numbersB = caracteresAposMais;
-                }
+                String number = getNumbersB(operator);
 
-                Double result = 0.0;
-
-
-                if (operator.equals("+")) {
-                    result = Double.parseDouble(numbersA) + Double.parseDouble(numbersB);
-                } else if (operator.equals("-")) {
-                    result = Double.parseDouble(numbersA) - Double.parseDouble(numbersB);
-                } else if (operator.equals("᙮")) {
-                    result = Double.parseDouble(numbersA) * Double.parseDouble(numbersB);
-                } else if (operator.equals("÷")) {
-                    result = Double.parseDouble(numbersA) / Double.parseDouble(numbersB);
-                }
-
-                textView.setText(String.valueOf(result));
+                textView.setText(String.valueOf(calcResult(numbersA, number, operator)));
 
             }
         });
